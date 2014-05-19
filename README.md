@@ -64,6 +64,48 @@ mechanism for event acquisition.
 It's currently unclear where application/process-level data, such as JMX,  should be
 gathered from. This might make sense to live in the Agent, or the Relay.
 
+#### Agent Design
+
+```
+                      +--------+                                                              
+                      | ZeroMQ |                                                              
+                      +--------+                                                              
+                       ^                                                                      
+                       |                                                                      
+                       |                                                                      
++---------+     +------+----+           +-----------------+                                   
+|Main loop|     | Publisher |<----------+ Process Monitor |                                   
++---------+     +-----------+           |   (listener)    |<--------- systemd/dbus            
+                     ^ ^ ^ ^            +-----------------+                                   
+                     | | | |                                                                  
+                     | | | |           +--------------------+                                 
+                     | | | +-----------+ Filesystem Monitor |<------- inotify/kqueue          
+                     | | |             |    (listener)      |                                 
+    +------------+   | | |             +--------------------+                                 
+    | Heartbeat  +---+ | |                                                                    
+    | (observer) |     | |                +---------------+                                   
+    +------------+     | |                | MySQL Slow    |                                   
+                       | +----------------+ Query Monitor |<--------- inotify/kqueue file-read
+  +--------------+     |                  |  (listener)   |                                   
+  | Disk Monitor +-----+                  +---------------+                                   
+  |  (observer)  |                                                                            
+  +--------------+                                                                            
+```
+
+##### Listeners
+
+Listeners are evented entities within the agent, in order for a monitor to act
+as a listener it must receive events from some external source on the system
+being monitored.
+
+Unless otherwise required, all monitors should be listeners by default.
+
+##### Observers
+
+Observers are all polling/interval based monitors that the agent will run in a
+separate thread.
+
+
 ### Statsd
 
 The intended purpose of the Statsd daemon is to provide application-based
