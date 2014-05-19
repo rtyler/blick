@@ -2,3 +2,5 @@ pkg/
 *.swp
 tmp/
 log/
+obj/
+.ruby-*

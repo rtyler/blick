@@ -1,0 +1,6 @@
+[submodule "contrib/dbus-ada"]
+	path = contrib/dbus-ada
+	url = http://git.codelabs.ch/git/dbus-ada.git
+[submodule "contrib/zeromq-ada"]
+	path = contrib/zeromq-ada
+	url = git://github.com/persan/zeromq-Ada.git
