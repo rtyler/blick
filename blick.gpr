@@ -1,0 +1,21 @@
+with "contrib/zeromq-ada/zmq.gpr";
+
+project Blick is
+   for Source_Dirs use ("./src/**");
+   for Object_Dir use "obj";
+   for Main use ("blick-agent-main.adb", "blick-server-main.adb");
+
+   package Builder is
+      for Executable ("blick-agent-main.adb") use "blick-agent";
+      for Executable ("blick-server-main.adb") use "blick-server";
+   end Builder;
+
+   package Compiler is
+      for Default_Switches ("Ada") use ("-g", "-O0", "-gnat2012", "-gnatE");
+   end Compiler;
+
+   package Linker is
+      for Default_Switches ("Ada") use ("-lzmqAda");
+   end Linker;
+
+end Blick;
