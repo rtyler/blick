@@ -11,10 +11,11 @@ contrib/zeromq-ada/lib/static/libzmqAda.a:
 
 prep:
 	@mkdir -p obj
+	@mkdir -p bin
 
 clean:
 	@echo "> Cleaning"
-	rm -rf obj/*
+	rm -rf obj bin
 	$(MAKE) -C contrib/zeromq-ada clean
 
 .PHONY: clean agent prep

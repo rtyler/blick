@@ -3,6 +3,7 @@ with "contrib/zeromq-ada/zmq.gpr";
 project Blick is
    for Source_Dirs use ("./src/**");
    for Object_Dir use "obj";
+   for Exec_Dir use "bin";
    for Main use ("blick-agent-main.adb", "blick-server-main.adb");
 
    package Builder is
