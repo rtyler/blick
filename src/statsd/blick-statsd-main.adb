@@ -1,7 +1,9 @@
-with Ada.Text_IO;
-with Ada.Strings.Unbounded;
 
 with Ada.Streams;
+with Ada.Strings.Unbounded;
+
+with Alog.Logger;
+with Alog.Facilities.File_Descriptor;
 
 with Anet.Streams;
 with Anet.Sockets.Inet;
@@ -9,7 +11,11 @@ with Anet.Receivers.Stream;
 with Anet.Receivers.Datagram;
 
 procedure Blick.Statsd.Main is
-   use Ada.Text_IO;
+   use Alog;
+
+   --  Initialize logger instance with default file descriptor facility
+   --  (logs to stdout).
+   Log : Logger.Instance (Init => True);
 
    package Unbound renames Ada.Strings.Unbounded;
 
@@ -52,7 +58,10 @@ procedure Blick.Statsd.Main is
                if Byte /= 16#a# then
                   Unbound.Append (Buffer, To_Character (Byte));
                else
-                  Put_Line ("Metric received (" & Unbound.To_String (Buffer) & ") need to flush");
+                  Log.Log_Message (Source => "Compositor",
+                                   Level  => Info,
+                                   Msg    => "`" & Unbound.To_String (Buffer) & "` composed; flushing");
+                  -- XXX: Handle the metric
                   Unbound.Delete (Buffer, 1, Unbound.Length (Buffer));
                end if;
             end loop;
@@ -74,7 +83,10 @@ procedure Blick.Statsd.Main is
    Socket   : aliased Anet.Sockets.Inet.UDPv4_Socket_Type;
    Receiver : UDP_Receiver.Receiver_Type (S => Socket'Access);
 begin
-   Put_Line ("Starting Blick Statsd relay");
+   --  Write a message with loglevel 'Info' to stdout.
+   Log.Log_Message (Source => "Main",
+                    Level  => Info,
+                    Msg    => "Starting the Blick statsd relay");
 
    Socket.Init;
    Socket.Bind (Port => 8125);
