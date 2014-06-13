@@ -1,14 +1,22 @@
 with "contrib/zeromq-ada/zmq.gpr";
 
 project Blick is
-   for Source_Dirs use ("./src/**");
+   -- Adding /usr/local/include to the source dir path so we can build in anet
+   -- and alog from the FreeBSD ports
+   for Source_Dirs use ("./src/**",
+                        "/usr/local/include/**");
+
    for Object_Dir use "obj";
    for Exec_Dir use "bin";
-   for Main use ("blick-agent-main.adb", "blick-server-main.adb");
+
+   for Main use ("blick-agent-main.adb",
+                 "blick-server-main.adb",
+                 "blick-statsd-main.adb");
 
    package Builder is
       for Executable ("blick-agent-main.adb") use "blick-agent";
       for Executable ("blick-server-main.adb") use "blick-server";
+      for Executable ("blick-statsd-main.adb") use "blick-statsd";
    end Builder;
 
    package Compiler is

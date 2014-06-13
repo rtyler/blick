@@ -1,8 +1,6 @@
 
 
-agent: prep contrib/zeromq-ada/lib/static/libzmqAda.a
-	pwd
-	@echo "> Building the blick agent"
+blick: prep contrib/zeromq-ada/lib/static/libzmqAda.a
 	gprbuild -P blick.gpr -XLIBRARY_TYPE=relocatable
 
 contrib/zeromq-ada/lib/static/libzmqAda.a:
@@ -18,4 +16,4 @@ clean:
 	rm -rf obj bin
 	$(MAKE) -C contrib/zeromq-ada clean
 
-.PHONY: clean agent prep
+.PHONY: clean blick prep

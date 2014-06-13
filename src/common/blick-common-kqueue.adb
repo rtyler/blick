@@ -1,11 +1,9 @@
 private with Interfaces.C;
-private with ada.text_io;
 private with System;
 private with System.Address_Image;
 
 package body Blick.Common.KQueue is
    use Interfaces.C;
-   use ada.text_io;
 
    function Listen (Q : in Queue;
                     Ev : Event_Ptr;

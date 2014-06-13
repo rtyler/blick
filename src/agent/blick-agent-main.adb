@@ -10,6 +10,7 @@ with ZMQ.Contexts;
 with ZMQ.Messages;
 
 with Blick.Common.KQueue;
+with Blick.Listener;
 
 procedure Blick.Agent.Main is
    use Ada.Text_IO;
