@@ -1,11 +1,10 @@
 
 
 blick: prep contrib/zeromq-ada/lib/static/libzmqAda.a
-	gprbuild -P blick.gpr -XLIBRARY_TYPE=relocatable
+	ADA_PROJECT_PATH=./contrib/aunit/lib/gnat gprbuild -P blick.gpr -XLIBRARY_TYPE=relocatable
 
 contrib/zeromq-ada/lib/static/libzmqAda.a:
 	$(MAKE) -C contrib/zeromq-ada compile
-
 
 prep:
 	@mkdir -p obj
