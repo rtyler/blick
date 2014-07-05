@@ -8,10 +8,19 @@ GEM
       thread_safe (~> 0.1)
       tzinfo (~> 1.1)
     diff-lcs (1.2.5)
+    edn (1.0.6)
+    ffi (1.9.3)
+    ffi-rzmq (2.0.1)
+      ffi-rzmq-core (>= 1.0.1)
+    ffi-rzmq-core (1.0.3)
+      ffi (~> 1.9)
     i18n (0.6.9)
     jruby-jars (1.7.13)
     jruby-rack (1.1.14)
+    jrzmq (1.0.3.2)
+      edn (>= 1.0.2)
     json (1.8.1)
+    json (1.8.1-java)
     middleware (0.1.0)
     minitest (5.3.5)
     multi_json (1.10.1)
@@ -36,6 +45,7 @@ GEM
     rubyzip (1.0.0)
     thor (0.19.1)
     thread_safe (0.3.4)
+    thread_safe (0.3.4-java)
     tzinfo (1.2.1)
       thread_safe (~> 0.1)
     warbler (1.4.3)
@@ -45,9 +55,12 @@ GEM
       rubyzip (>= 0.9, < 1.1)
 
 PLATFORMS
+  java
   ruby
 
 DEPENDENCIES
+  ffi-rzmq
+  jrzmq
   protobuf
   rake
   rspec

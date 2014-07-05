@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+
+source ~/.rvm/scripts/rvm
+
+JRUBY=${JRUBY:=jruby}
+GEMSET=${GEMSET:=rubygems}
+
+echo ">> Using ${JRUBY} in ${GEMSET}"
+
+rvm use ${JRUBY}@${GEMSET}
+
+# Test to make sure we have bundler around
+which bundle > /dev/null
+
+if [ $? -ne 0 ]; then
+  echo ">> Installing bundler into the ${GEMSET} gemset"
+  gem install bundler --no-ri --no-rdoc
+fi;
+
+echo ">> Executing `bundle install`"
+bundle install
+
+exec $@
