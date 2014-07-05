@@ -1,0 +1,32 @@
+package blick.events;
+
+
+message Header {
+  required string hostname  = 1;
+  required string timestamp = 2;
+}
+
+message Heartbeat {
+  required Header header = 1;
+}
+
+message Datapoint {
+  required Header header           = 1;
+  required string name             = 2;
+  /* XXX: This will need to be refactored to support multiple datatypes */
+  required string value            = 3;
+  /* perhaps using a `type` field which references an enum of other protobufs? */
+  required SourceTypes source_type = 4;
+  required string emitter          = 5;
+}
+
+/* SourceTypes are to indicate to the receiver of a Datapoint what kind of data
+ * source we're talking about.
+ */
+enum SourceTypes {
+  // Counter is a source of data that increments over time
+  COUNTER  = 9001;
+  // Snapshot is a source of data that provides a current reading every time
+  // you query it
+  SNAPSHOT = 9002;
+}
