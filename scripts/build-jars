@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+
+source $(dirname $0)/_usejruby.sh
+
+
+echo "> Cleaning build/ of jars"
+
+rm -f build/*.jar
+
+load_rvm
+use_jruby
+install_gems
+
+for f in bin/*; do
+  export JAR_NAME=$(basename $f)
+  echo "> Building ${JAR_NAME}.jar";
+  warble executable jar
+  mv "${JAR_NAME}.jar" build/
+done;
