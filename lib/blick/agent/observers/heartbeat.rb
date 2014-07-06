@@ -1,5 +1,6 @@
-require 'blick/events'
 require 'blick/agent/observer'
+require 'blick/events'
+require 'blick/emitter'
 
 module Blick::Agent
   module Observers
