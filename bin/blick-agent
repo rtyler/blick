@@ -1,0 +1,23 @@
+#!/usr/bin/env ruby
+
+$LOAD_PATH.unshift(File.expand_path(File.dirname(__FILE__) + '/../lib'))
+
+require 'blick/agent/scheduler'
+
+s = Blick::Agent::Scheduler.new
+
+s.run!
+
+$should_die = false
+puts 'Our heartbeat is now running'
+
+until $should_die do
+  sleep 1
+end
+
+at_exit do
+  puts 'Stopping things'
+  s.stop!
+  $should_die = true
+end
+
