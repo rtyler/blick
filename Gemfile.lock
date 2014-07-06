@@ -61,6 +61,7 @@ GEM
       jruby-rack (>= 1.0.0)
       rake (>= 0.9.6)
       rubyzip (>= 0.9, < 1.1)
+    yard (0.8.7.3)
 
 PLATFORMS
   java
@@ -75,3 +76,4 @@ DEPENDENCIES
   rake
   rspec
   warbler
+  yard

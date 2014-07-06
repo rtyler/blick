@@ -18,4 +18,6 @@ group :test do
   gem 'rspec'
   # For creating the executable package
   gem 'warbler'
+
+  gem 'yard'
 end
