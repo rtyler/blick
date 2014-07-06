@@ -7,7 +7,9 @@ message Header {
 }
 
 message Heartbeat {
-  required Header header = 1;
+  required Header header    = 1;
+  repeated string observers = 2;
+  repeated string listeners = 3;
 }
 
 message Datapoint {

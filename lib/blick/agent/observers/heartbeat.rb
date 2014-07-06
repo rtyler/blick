@@ -33,9 +33,21 @@ module Blick::Agent
       #######################################################################
 
       def execute
-        puts "trying to emit"
-        Blick::Emitter.emit(
-          Blick::Events::Heartbeat.new(:header => Blick::Events.header))
+        beat = Blick::Events::Heartbeat.new(:header => Blick::Events.header)
+        beat.observers = self.enabled_observers
+        return Blick::Emitter.emit(beat)
+      end
+
+      # @return [Array] Collection of the names of the currently enabled
+      #   observers
+      def enabled_observers
+        Blick::Agent::Observer.registry.map { |obs|
+          if obs.enabled?
+            obs.name
+          else
+            nil
+          end
+        }.compact
       end
     end
   end

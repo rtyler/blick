@@ -33,6 +33,8 @@ module Blick
 
     class Heartbeat
       required ::Blick::Events::Header, :header, 1
+      repeated :string, :observers, 2
+      repeated :string, :listeners, 3
     end
 
     class Datapoint
