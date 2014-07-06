@@ -9,7 +9,7 @@ module Blick
         @register ||= []
       end
 
-      def self.enabled
+      def self.enabled?
         false
       end
 
@@ -38,6 +38,13 @@ module Blick
       end
 
       def cleanup
+      end
+
+      def self.run!
+        observer = self.new
+        observer.prepare
+        observer.execute
+        observer.cleanup
       end
 
       private

@@ -20,7 +20,7 @@ shared_examples 'an Observer' do
       it { should be > 0 }
     end
 
-    it { should respond_to :enabled }
+    it { should respond_to :enabled? }
 
     describe '.platforms' do
       subject { observer.platforms }

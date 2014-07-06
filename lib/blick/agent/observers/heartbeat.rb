@@ -15,13 +15,13 @@ module Blick::Agent
         'An observer which emits periodic heartbeats'
       end
 
-      def self.enabled
+      def self.enabled?
         true
       end
 
       # @return [Fixnum] number of seconds to run this observer
       def self.interval
-        60
+        10
       end
 
       def self.platforms
@@ -33,6 +33,7 @@ module Blick::Agent
       #######################################################################
 
       def execute
+        puts "Executing a heartbeat (#{Time.now.utc})"
       end
     end
   end
