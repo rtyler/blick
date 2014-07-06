@@ -17,7 +17,7 @@ if [ $? -ne 0 ]; then
   gem install bundler --no-ri --no-rdoc
 fi;
 
-echo ">> Executing `bundle install`"
+echo ">> Executing \`bundle install\`"
 bundle install
 
 exec $@
