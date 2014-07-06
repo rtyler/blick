@@ -33,7 +33,9 @@ module Blick::Agent
       #######################################################################
 
       def execute
-        puts "Executing a heartbeat (#{Time.now.utc})"
+        puts "trying to emit"
+        Blick::Emitter.emit(
+          Blick::Events::Heartbeat.new(:header => Blick::Events.header))
       end
     end
   end

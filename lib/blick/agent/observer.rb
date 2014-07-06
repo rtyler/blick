@@ -1,3 +1,4 @@
+require 'blick/emitter'
 
 module Blick
   module Agent

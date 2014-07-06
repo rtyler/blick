@@ -29,7 +29,11 @@ module Blick
 
           tt = Concurrent::TimerTask.new(:execution_interval => obs.interval,
                                         :timeout_interval   => obs.interval) do
-                                          obs.run!
+                                          begin
+                                            obs.run!
+                                          rescue StandardError => e
+                                            puts "FAILURE #{e.inspect}"
+                                          end
                                         end
           self.tasks[obs] = tt
         end
