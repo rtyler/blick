@@ -39,10 +39,8 @@ module Blick
 
     class Datapoint
       required ::Blick::Events::Header, :header, 1
-      required :string, :name, 2
-      required :string, :value, 3
-      required ::Blick::Events::SourceTypes, :source_type, 4
-      required :string, :emitter, 5
+      required :bytes, :data, 2
+      required :string, :emitter, 3
     end
 
   end

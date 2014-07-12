@@ -4,6 +4,8 @@ require 'blick/emitter'
 
 module Blick::Agent
   module Observers
+    # The heartbeat observer is for indicating that this instance of the agent
+    # is operational and functioning properly.
     class Heartbeat < Observer
       #######################################################################
       ### Observer registry/internals
@@ -33,6 +35,9 @@ module Blick::Agent
       ### Observer execution/runtime
       #######################################################################
 
+      # Emit a {Blick::Events::Heartbeat} event to the bus
+      #
+      # @return [Boolean] Success of the +#emit+ operation
       def execute
         beat = Blick::Events::Heartbeat.new(:header => Blick::Events.header)
         beat.observers = self.enabled_observers

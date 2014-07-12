@@ -13,13 +13,9 @@ message Heartbeat {
 }
 
 message Datapoint {
-  required Header header           = 1;
-  required string name             = 2;
-  /* XXX: This will need to be refactored to support multiple datatypes */
-  required string value            = 3;
-  /* perhaps using a `type` field which references an enum of other protobufs? */
-  required SourceTypes source_type = 4;
-  required string emitter          = 5;
+  required Header header  = 1;
+  required bytes data     = 2;
+  required string emitter = 3;
 }
 
 /* SourceTypes are to indicate to the receiver of a Datapoint what kind of data

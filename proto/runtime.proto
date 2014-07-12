@@ -1,0 +1,10 @@
+import 'events.proto';
+package blick.events.datapoints;
+
+message RubyRuntime {
+  required string name             = 2;
+  /* XXX: This will need to be refactored to support multiple datatypes */
+  required string value            = 3;
+  /* perhaps using a `type` field which references an enum of other protobufs? */
+  required SourceTypes source_type = 4;
+}
