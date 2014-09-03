@@ -4,7 +4,6 @@ source 'https://rubygems.org'
 gem 'rake'
 
 # Gem for defining protobuf messages and rpcs
-
 gem 'protobuf'
 # Useful for managing futures/timers/etc
 gem 'concurrent-ruby'
@@ -13,6 +12,11 @@ gem 'ffi-rzmq', :platform => :mri
 gem 'jrzmq', :platform => :jruby
 
 gem 'pry'
+gem 'sinatra'
+
+group :development do
+  gem 'shotgun', :platform => :mri
+end
 
 group :test do
   gem 'rspec'
