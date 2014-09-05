@@ -1,0 +1,30 @@
+apply plugin: 'java'
+apply plugin: 'com.github.jruby-gradle.jar'
+
+buildscript {
+    repositories {
+        jcenter()
+        mavenLocal()
+    }
+    dependencies {
+        classpath group: 'com.github.jruby-gradle', name: 'jruby-gradle-plugin', version: '0.1.3-SNAPSHOT'
+        classpath group: 'com.github.jruby-gradle', name: 'jruby-gradle-jar-plugin', version: '0.1.1-SNAPSHOT'
+    }
+}
+
+dependencies {
+    gems group: 'rubygems', name: 'protobuf', version: '3.0.+'
+}
+
+jar {
+    jruby {
+        defaultGems()
+        // Make the JAR executable and use the default main class
+        defaultMainClass()
+    }
+}
+
+
+
+
+// vim: ft=groovy
