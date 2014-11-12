@@ -1,5 +1,6 @@
 plugins {
   id "com.github.jruby-gradle.jar" version "0.1.2"
+  id "com.github.jruby-gradle.base" version "0.1.5"
   id "com.github.johnrengelman.shadow" version "1.1.2"
 }
 apply plugin: 'java'
@@ -9,6 +10,7 @@ import com.github.jrubygradle.JRubyExec
 dependencies {
     gems group: 'rubygems', name: 'protobuf', version: '3.0.+'
     gems group: 'rubygems', name: 'concurrent-ruby', version: '0.7.+'
+    gems group: 'rubygems', name: 'rake', version: '10.3.+'
 
     jrubyExec group: 'rubygems', name: 'rspec', version: '3.1.+'
     jrubyExec group: 'rubygems', name: 'rspec-its', version: '1.+'
@@ -23,7 +25,7 @@ configurations {
 
 jrubyJavaBootstrap {
     jruby {
-        initScript = 'blick-agent'
+        initScript = 'bin/rake'
     }
 }
 
@@ -47,8 +49,8 @@ shadowJar {
 task spec(type: JRubyExec) {
     group 'JRuby'
     description 'Execute the RSpecs in JRuby'
-    jrubyArgs '-S', 'rspec'
-    scriptArgs '--color', '--order', 'random'
+    jrubyArgs '-S'
+    script 'rspec'
 }
 
 // XXX: Currently this does not work properly because stdin is not being
