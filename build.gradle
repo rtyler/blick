@@ -1,67 +1,61 @@
-plugins {
-  id "com.github.jruby-gradle.jar" version "0.1.2"
-  id "com.github.jruby-gradle.base" version "0.1.5"
-  id "com.github.johnrengelman.shadow" version "1.1.2"
-}
-apply plugin: 'java'
+buildscript {
+    repositories {
+        jcenter()
+    }
 
+    dependencies {
+        classpath 'com.github.jruby-gradle:jruby-gradle-jar-plugin:1.0.3'
+        //classpath 'com.github.jruby-gradle:jruby-gradle-jar-plugin:1.0.2'
+    }
+
+}
+apply plugin: 'com.github.jruby-gradle.jar'
 import com.github.jrubygradle.JRubyExec
+
+version = 1.0
+
+jruby.defaultRepositories = false
+jruby.defaultVersion = '1.7.19'
+
+repositories {
+    maven { url 'http://rubygems-jrubygradle.rhcloud.com/proxy/maven/releases/' }
+    jcenter()
+}
 
 dependencies {
     gems group: 'rubygems', name: 'protobuf', version: '3.0.+'
     gems group: 'rubygems', name: 'concurrent-ruby', version: '0.7.+'
     gems group: 'rubygems', name: 'rake', version: '10.3.+'
 
-    jrubyExec group: 'rubygems', name: 'rspec', version: '3.1.+'
-    jrubyExec group: 'rubygems', name: 'rspec-its', version: '1.+'
-    jrubyExec group: 'rubygems', name: 'pry', version: '0.10.+'
+    jrubyExec 'rubygems:rspec:3.3.0'
+    jrubyExec 'rubygems:rspec-its:1.2.0+'
+    jrubyExec 'rubygems:pry:0.10.0+'
 }
 
 configurations {
-    jrubyExec {
-        extendsFrom gems
-    }
+    jrubyExec.extendsFrom gems
+    jrubyJar.extendsFrom gems
 }
 
-jrubyJavaBootstrap {
-    jruby {
-        initScript = 'bin/rake'
-    }
+task spec(type: JRubyExec) {
+    group 'JRuby'
+    description 'Execute the RSpecs in JRuby'
+    script 'rspec'
+    inputs.source fileTree('spec').include('**/*.rb'), fileTree('lib').include('**/*.rb')
 }
+
+jrubyJar {
+    initScript "${projectDir}/bin/blick-agent"
+    from 'lib'
+    dependsOn spec
+}
+assemble.dependsOn jrubyJar
 
 // Pull the contents of lib and bin into the root of the created jar file
 sourceSets {
     main {
         resources.srcDirs = ['lib', 'bin']
     }
-}
-
-shadowJar {
-    baseName 'blick-agent'
-    exclude '*.sw*', '*.gitkeep', '*.md'
-    jruby {
-        // Use the default GEM installation directory
-        defaultGems()
-        defaultMainClass()
-    }
-}
-
-task spec(type: JRubyExec) {
-    group 'JRuby'
-    description 'Execute the RSpecs in JRuby'
-    jrubyArgs '-S'
-    script 'rspec'
-}
-
-// XXX: Currently this does not work properly because stdin is not being
-// delegated properly
-task console(type: JRubyExec) {
-    group 'JRuby'
-    description 'Execute a Pry-based console in JRuby'
-    jrubyArgs '-S', 'pry'
-    scriptArgs '-I', './lib'
-    standardInput System.in
-    standardOutput System.out
 }
 
 // vim: ft=groovy

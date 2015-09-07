@@ -6,3 +6,5 @@ doc/
 .yardoc/
 build/
 .gradle/
+.idea/
+*.iml

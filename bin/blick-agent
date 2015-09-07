@@ -9,7 +9,7 @@ s = Blick::Agent::Scheduler.new
 s.run!
 
 $should_die = false
-puts 'Our heartbeat is now running'
+puts "Our heartbeat is now running on JRuby: #{JRUBY_VERSION}"
 
 until $should_die do
   sleep 1

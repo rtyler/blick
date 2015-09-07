@@ -1,1 +1,1 @@
---order random --fail-fast --format doc --color
+--order random --fail-fast --format progress --color --backtrace
