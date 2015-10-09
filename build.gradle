@@ -1,11 +1,11 @@
 buildscript {
     repositories {
         jcenter()
+        mavenLocal()
     }
 
     dependencies {
-        classpath 'com.github.jruby-gradle:jruby-gradle-jar-plugin:1.0.3'
-        //classpath 'com.github.jruby-gradle:jruby-gradle-jar-plugin:1.0.2'
+        classpath 'com.github.jruby-gradle:jruby-gradle-jar-plugin:[1.1.4,2.0)"
     }
 
 }
@@ -14,18 +14,17 @@ import com.github.jrubygradle.JRubyExec
 
 version = 1.0
 
-jruby.defaultRepositories = false
-jruby.defaultVersion = '1.7.19'
-
 repositories {
-    maven { url 'http://rubygems-jrubygradle.rhcloud.com/proxy/maven/releases/' }
     jcenter()
+    rubygems('https://rubygems.org')
 }
 
 dependencies {
     gems group: 'rubygems', name: 'protobuf', version: '3.0.+'
     gems group: 'rubygems', name: 'concurrent-ruby', version: '0.7.+'
     gems group: 'rubygems', name: 'rake', version: '10.3.+'
+
+    gems 'io.netty:netty-all:5.0.0.Alpha2'
 
     jrubyExec 'rubygems:rspec:3.3.0'
     jrubyExec 'rubygems:rspec-its:1.2.0+'
@@ -35,6 +34,8 @@ dependencies {
 configurations {
     jrubyExec.extendsFrom gems
     jrubyJar.extendsFrom gems
+
+    jarjar.extendsFrom jrubyJar
 }
 
 task spec(type: JRubyExec) {
@@ -47,6 +48,9 @@ task spec(type: JRubyExec) {
 jrubyJar {
     initScript "${projectDir}/bin/blick-agent"
     from 'lib'
+    from('config') {
+        into 'conf'
+    }
     dependsOn spec
 }
 assemble.dependsOn jrubyJar

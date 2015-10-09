@@ -10,6 +10,7 @@ s.run!
 
 $should_die = false
 puts "Our heartbeat is now running on JRuby: #{JRUBY_VERSION}"
+require 'openssl'
 
 until $should_die do
   sleep 1
